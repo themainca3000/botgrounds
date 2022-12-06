@@ -45,6 +45,9 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction) => {
   const channel = interaction.member.voice.channel;
 
+  if (!channel)
+    return interaction.reply("Necesito que te conectes a un canal de voz.");
+
   const connection = voiceDiscord.joinVoiceChannel({
     channelId: interaction.member.voice.channel.id,
     guildId: interaction.guild.id,
@@ -55,9 +58,7 @@ const execute = async (interaction) => {
     isPlaying = false;
     playOnChannel(connection, interaction);
   });
-  
-  if (!channel)
-    return interaction.reply("Necesito que te conectes a un canal de voz.");
+
 
   let query = interaction.options.getString("search-terms");
 
